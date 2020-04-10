@@ -1,0 +1,41 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300);
+
+
+input{
+  
+  	margin: 0 auto;
+  	font-family: Lato;
+	width: 500px;
+    height: 80px;  
+    margin-top: 80px;
+	font-size: 1.8em;  
+	font-weight: bold;
+    background-color: transparent;
+    border: none;
+    border-top: 3px solid #240B36;    
+    border-bottom: 3px solid #240B36;
+    outline: none;
+    color: #240B36;
+    padding-left: 10px;  
+}
+
+input:focus + label{
+      top: -110px;
+      font-size: 1.2em;
+      transition: all .3s;
+      
+}
+    
+
+label{
+    display: block;
+    position: relative;
+    left: 10px;
+    top: -70px;
+    font-size: 1.8em;
+    cursor: text;
+    color: #240B36;    
+	transition: all .3s;   
+	
+}
+

@@ -1,19 +1,41 @@
 
+
+
 function initMemeGen() {
 
 
-    var currMeme = getCurrMeme();
     initCanvas();
-    setCanvasDimensions(currMeme);
+    setCanvasDimensions();
+    // setCanvasDimensions(currMeme);
 
 }
 
+function onGetText(value) {
 
-function setMeme() {
-
-    var idx = getCurrMeme().selectedImgID;
-    var pic = getImgByID(idx).url;
-    var elCanvas = document.querySelector('#my-canvas');
-    elCanvas.style.backgroundImage = `url(${pic})`;
+    changeMemeText(value);
+    drawText();
+    clearInputText();
 }
+
+function onChangeFontSize(num) {
+    onChangeFontSize(num);
+
+}
+
+function onMove(y) {
+
+    moveLine(y);
+}
+
+function onSwitchLine() {
+    SwitchLine()
+}
+
+
+
+
+
+
+
+
 

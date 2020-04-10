@@ -1,6 +1,6 @@
 
 
-var gImgs = [{ id: 1, url: '../meme-imgs-square/1.jpg', keywords: ['happy'] }, { id: 2, url: '../meme-imgs-square/2.jpg', keywords: ['love'] }];
+var gImgs = [{ id: 1, url: './meme-imgs-square/1.jpg', keywords: ['happy'] }, { id: 2, url: './meme-imgs-square/2.jpg', keywords: ['love'] }];
 
 
 

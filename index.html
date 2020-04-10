@@ -5,19 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/input.css">
     <title>Meme Generator</title>
 </head>
 
 <body onload="init()">
-    <nav class="navbar"></nav>
+    <nav class="navbar">
+        <img class="logo" src="/icons/logo.png" alt="">
+        <h3 class="main-nav-header">Meme-That-Pic</h3>
+        <div class="back-to-gallery" ontouchstart="toggleModal()" onclick="toggleModal()">GENERATOR</div>
+    </nav>
+
+
+
     <section class="image-gallery-container">
         <h2 class="image-gallery-header">Image Gallery</h2>
         <div class="image-gallery"></div>
 
+
     </section>
-    <section class="meme-generator">
+    <section class="meme-generator hide">
+        <div class="actions">
+            <input type="text" class="meme-line" id="input-a" onchange="onGetText(this.value)">
+            <label for="input-a"> Meme it. </label>
+            <div class="change-font-buttons">
+                <button ontouchstart="changeFontSize(10)" onclick="changeFontSize(10)"
+                    class="font-increase">font+</button>
+                <button ontouchstart="changeFontSize(-10)" onclick="changeFontSize(-10)"
+                    class="font-decrease">font-</button>
+            </div>
+            <div class="move-buttons">
+                <button ontouchstart="onMove(-1)" onclick="onMove(-1)" class="move-up">up</button>
+                <button ontouchstart="onMove(1)" onclick="onMove(1)" class="move-down">down</button>
+            </div>
+            <button onclick="onSwitchLine()" ontouchstart="onSwitchLine()" class="switch-line">Switch line</button>
+        </div>
         <div class="canvas-container">
-            <canvas id="my-canvas" height="450" width=""></canvas>
+            <canvas id="my-canvas" height="0" width="0"></canvas>
         </div>
 
     </section>
@@ -27,9 +52,9 @@
     <script src="js/utils.js"></script>
     <script src="js/gallery-service.js"></script>
     <script src="js/meme-gen-service.js"></script>
-
-    <script src="js/gallery-controller.js"></script>
     <script src="js/meme-gen-controller.js"></script>
+    <script src="js/gallery-controller.js"></script>
+
     <script src="js/main.js"></script>
 
 </body>

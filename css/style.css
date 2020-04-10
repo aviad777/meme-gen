@@ -1,13 +1,178 @@
+@font-face {
+    font-family: FrancoisOne-Regular;
+    src: url(/fonts/francois/FrancoisOne-Regular.ttf);
+}
+
+
+
 body {
     margin: 0;
+    background-color: #E2FCEF;
+    height: 100vh;
     
 }
+
+@import url(/css/buttons.css);
+@import url(/css/input.css);
+
+
+/* button {
+    border: none;
+    background-color: #240B36;
+    color: rgb(245, 245, 245);
+} */
 
 #my-canvas {
     
-    border: 2px solid pink;
+    border: 2px solid sandybrown;
+    
 }
 
 img {
-    border: pink 4px solid;
+    border: sandybrown 4px solid;
+    
+}
+
+
+
+nav {
+    color: rgb(245, 245, 245);
+    font-family: FrancoisOne-Regular;
+    display: flex;
+    height: 120px;
+    background-color: sandybrown;
+    border-bottom: #240B36 3px solid;
+    
+}
+
+.logo {
+    flex-basis: 20%;
+    width: 80px;
+}
+
+.main-nav-header {
+    font-size: 2rem;
+    flex-basis: 70%;
+    margin: auto;
+    padding: 20px;
+}
+
+.back-to-gallery {
+    background-color: #240B36;
+    
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 10%;
+
+}
+.image-gallery-container {
+    display: flex;
+    min-width: 900px;
+    min-height: 700px;
+    margin: 0 50px;
+    border-left: #240B36 1px solid;
+    border-right: #240B36 1px solid;
+
+}
+.image-gallery-container.hide {
+    display: none;
+    height: 0;
+}
+.image-gallery-header {
+    margin: 0;
+    margin-left: 30px;
+    font-family: FrancoisOne-Regular;
+}
+
+.image-gallery {
+    
+    margin-top:30px;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+
+.meme-image {
+    width: 120px;
+    height: 120px;
+    margin-left: 45px;
+}
+
+
+
+.meme-generator {
+    visibility: visible;
+    display: flex;
+    min-height: 700px;
+}
+.meme-generator.hide{
+    display: none;
+    height: 0;
+}
+
+
+.actions {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meme-line {
+    margin-top: 30px;
+}
+
+.change-font-buttons {
+    display: flex;
+    margin-top: 30px;
+}
+
+.move-buttons {
+    display: flex;
+    margin-top: 30px;
+}
+
+.canvas-container {
+    margin-top: 30px;
+    flex-basis: 50%;
+}
+
+
+@media only screen and (max-width: 1030px) {
+   
+    .image-gallery-container {
+        min-width: 500px;
+    }
+    .meme-image {
+        width: 80px;
+        height: 80px;
+        margin-left: 35px;
+    }
+    .canvas-container {
+        margin: 20px auto 0;
+    }
+
+    .actions {
+        max-width: 300px;
+    }
+
+    .meme-generator {
+        flex-direction: column-reverse;
+
+    }
+    .actions {
+        margin: 0 auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        width: 40px;
+    }
+  
 }

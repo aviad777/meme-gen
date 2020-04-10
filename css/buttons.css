@@ -1,0 +1,78 @@
+
+button {
+    display: block;
+    width: 100px;
+    text-decoration: none;
+    font-family: 'Ubuntu', sans-serif;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 30px;
+    border: 2px solid #fff;
+    margin: 8px;
+    -ms-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    box-shadow: 4px 4px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s cubic-bezier(0.34, 1.65, 0.88, 0.925) 0s;
+    outline: 0;
+}
+
+button:nth-child(1) {
+    -ms-transform: rotate(5deg) scale(0.9);
+    -webkit-transform: rotate(5deg) scale(0.9);
+    transform: rotate(5deg) scale(0.9);
+}
+
+button:nth-child(1):hover {
+    background: #00E178;
+}
+
+button:nth-child(2) {
+    -ms-transform: rotate(-7deg) scale(0.9);
+    -webkit-transform: rotate(-7deg) scale(0.9);
+    transform: rotate(-7deg) scale(0.9);
+}
+
+button:nth-child(2):hover {
+    background: #3686FF;
+}
+
+
+.switch-line {
+    margin-top: 40px;
+    width: 120px;
+    -ms-transform: rotate(5deg) scale(0.9);
+    -webkit-transform: rotate(5deg) scale(0.9);
+    transform: rotate(5deg) scale(0.9);
+}
+
+.switch-line:hover {
+    background: rgb(210, 225, 0);
+}
+
+a {
+    -ms-transform: rotate(12deg) scale(0.9);
+    -webkit-transform: rotate(12deg) scale(0.9);
+    transform: rotate(12deg) scale(0.9);
+}
+
+a:hover {
+    background: #FF0083;
+}
+
+button:hover,
+a:hover {
+    -ms-transform: rotate(0deg) scale(1.2);
+    -webkit-transform: rotate(0deg) scale(1.2);
+    transform: rotate(0deg) scale(1.2);
+}
+
+button:focus,
+button:active,
+a:focus,
+a:active {
+    -ms-transform: rotate(0deg) scale(1);
+    -webkit-transform: rotate(0deg) scale(1);
+    transform: rotate(0deg) scale(1);
+}
