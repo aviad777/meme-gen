@@ -1,22 +1,22 @@
 
-
-
-
-
+//show pics on Gallery
 function showPics() {
 
     elGallery = document.querySelector('.image-gallery');
     strHTML = '';
-    strHTML = getImgs().map((img, idx) => `<img class="meme-image meme-image${idx + 1}" ontouchstart="onSetMeme(getImgs()[${idx}])" onclick="onSetMeme(getImgs()[${idx}])" src="${img.url}" alt=""></img>`).join('');
+    strHTML = getImgs().map((img, idx) => `<img class="gallery-image gallery-image${idx + 1}" ontouchstart="onSetMeme(getImgs()[${idx}])" onclick="onSetMeme(getImgs()[${idx}])" src="${img.url}" alt=""></img>`).join('');
     elGallery.innerHTML = strHTML;
 }
 
+// creating a new meme on the generator
 function onSetMeme(img) {
     toggleModal();
     setNewMeme(img);
     setMeme(img);
 }
 
+
+// toggling between the memeGenerator to the gallery
 function toggleModal() {
 
     document.querySelector('.meme-generator').classList.toggle('hide');

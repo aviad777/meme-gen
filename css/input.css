@@ -1,25 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300);
 
 
-input{
+.meme-line{
   
   	margin: 0 auto;
-  	font-family: Lato;
+  	font-family: FrancoisOne-Regular;
 	width: 500px;
     height: 80px;  
     margin-top: 80px;
 	font-size: 1.8em;  
 	font-weight: bold;
-    background-color: transparent;
+    background-color: sandybrown;
     border: none;
     border-top: 3px solid #240B36;    
     border-bottom: 3px solid #240B36;
     outline: none;
-    color: #240B36;
+    color: rgb(245, 245, 245);
     padding-left: 10px;  
 }
 
-input:focus + label{
+.meme-line:focus + label{
       top: -110px;
       font-size: 1.2em;
       transition: all .3s;
@@ -27,7 +27,7 @@ input:focus + label{
 }
     
 
-label{
+.meme-line label{
     display: block;
     position: relative;
     left: 10px;

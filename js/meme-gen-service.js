@@ -1,17 +1,25 @@
-var gCanvas
-var gCtx
+var gCanvas  // canvas the meme generator
+var gCtx    // context 
+var gWidth
+var gDragLine = false;   // is a line being drag
+var gDragSticker = false;  // is a sticker being drag
+
+//current MEME
 var gCurrMeme =
 {
-    selectedImgID: 1,
-    selectedLineIdx: 0,
-    lines: [{ txt: '', size: '20px', align: 'left', color: 'red', x: 50, y: 100 }]
+    selectedImgID: 1, // the selected image num to get from the gallery
+    selectedLineIdx: 0, // the selected line of text to be focused on
+    selectedSticker: 0, // the selected sticker
+    lines: [{ txt: '', size: '20px', align: 'left', color: 'red', x: 50, y: 100, lineWidth: 0, lineHeight: 0 }],
+    stickers: []
 };
 
 
+//  **************************************canvas start**********************************************
+// get canvas context
 function getCtx() {
     return gCtx;
 }
-
 
 
 function initCanvas() {
@@ -22,95 +30,42 @@ function initCanvas() {
 
 
 function setCanvasDimensions() {
-    debugger
+
+
     gWidth = screen.width;
-    if (gWidth > 500) {
+    if (gWidth > 700) {
         gCanvas.width = 500;
         gCanvas.height = 500;
     } else {
+        document.querySelector('body').classList.add('mobile');
         gCanvas.width = 300;
         gCanvas.height = 300;
     }
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
 }
 
-function changeMemeText(value) {
 
-    var lineNum = gCurrMeme.selectedLineIdx;
-    gCurrMeme.lines[lineNum].txt = value;
 
-}
 
-function drawText() {
-    var lineNum = 0;
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+// ************************************* Meme ***************************************************************
+
+
+// render MEME
+function renderMeme() {
     setMeme();
-    while (lineNum < gCurrMeme.lines.length) {
-
-        x = gCurrMeme.lines[lineNum].x;
-        y = gCurrMeme.lines[lineNum].y;
-        console.log(y);
-        text = gCurrMeme.lines[lineNum].txt;
-
-        gCtx.strokeStyle = gCurrMeme.color;
-        gCtx.fillStyle = 'white';
-
-        gCtx.font = gCurrMeme.lines[lineNum].size + 'px impact';
-        // gCtx.textAlign = 'center'
-        gCtx.fillText(text, x, y);
-        gCtx.strokeText(text, x, y);
-        lineNum++;
-    }
+    drawText();
+    drawStickers();
 }
 
 
-
-
-function getInput() {
-
-}
-
-
-
-function getCurrMeme() {
-    var idx = gCurrMeme.selectedImgID;
-    var pic = getImgByID(idx).url;
-    return pic;
-}
-
-function createLine(txt = 'meme here', size = 20, align = 'left', color = 'yellow', x = 50, y = 100) {
-    let line = {
-        txt: txt,
-        size: size,
-        align: align,
-        color: color,
-        x: x,
-        y: y
-    }
-    return line;
-}
-
-
-function addLine(meme, line) {
-    meme.lines.push(line);
-}
-
-
-
-// function setMeme(img) {
-
-//     setNewMeme(img);
-//     var elCanvas = document.querySelector('#my-canvas');
-//     elCanvas.style.backgroundImage = `url(${img.url})`;
-// }
 
 function setMeme() {
-    debugger
 
-    // var elCanvas = document.querySelector('#my-canvas');
-
-    img = document.querySelector(`.meme-image${gCurrMeme.selectedImgID}`);
-    gCtx.drawImage(img, 0, 0, 500, 500);
+    img = document.querySelector(`.gallery-image${gCurrMeme.selectedImgID}`);
+    if (gWidth > 700)
+        gCtx.drawImage(img, 0, 0, 500, 500);
+    else
+        gCtx.drawImage(img, 0, 0, 500, 500, 0, 0, 300, 300);
 }
 
 
@@ -121,42 +76,15 @@ function setNewMeme(img) {
     {
         selectedImgID: img.id,
         selectedLineIdx: 0,
-        lines: [createLine()]
+        lines: [createLine()],
+        stickers: []
     }
 }
 
-function changeFontSize(num) {
-    debugger
-    var lineNum = gCurrMeme.selectedLineIdx;
-    gCurrMeme.lines[lineNum].size += num;
 
-    drawText();
-}
-
-function moveLine(y) {
-    var lineNum = gCurrMeme.selectedLineIdx;
-    gCurrMeme.lines[lineNum].y += y * 5;
-
-    drawText();
-
-}
-
-function SwitchLine() {
-    if (gCurrMeme.lines.length > 2) {
-        if (gCurrMeme.selectedLineIdx < 2)
-            gCurrMeme.selectedLineIdx++;
-        else gCurrMeme.selectedLineIdx = 0;
-    } else {
-        if (gCurrMeme.selectedLineIdx + 1 <= gCurrMeme.lines.length) {
-            gCurrMeme.selectedLineIdx++;
-            gCurrMeme.lines.push(createLine());
-        } else gCurrMeme.selectedLineIdx++;
-    }
-
-}
 
 function clearInputText() {
-    debugger
+
     document.querySelector('.meme-line').value = '';
 }
 
@@ -173,4 +101,263 @@ function clearMeme() {
 
 
 
+
+// ******************************************* Text Handling  ****************************************************
+
+
+function changeMemeText(value) {
+    var lineNum = gCurrMeme.selectedLineIdx;
+    gCurrMeme.lines[lineNum].txt = value;
+}
+
+
+function drawText() {
+    var lineNum = 0;
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    setMeme();
+    while (lineNum < gCurrMeme.lines.length) {
+        x = gCurrMeme.lines[lineNum].x;
+        y = gCurrMeme.lines[lineNum].y;
+        var text = gCurrMeme.lines[lineNum].txt;
+
+        gCtx.strokeStyle = gCurrMeme.color;
+        gCtx.fillStyle = 'white';
+        gCtx.font = gCurrMeme.lines[lineNum].size + 'px impact';
+
+        //  mesuare the height (actualBoundingBoxAscent) and than the width after 
+        gCurrMeme.lines[lineNum].lineHeight = gCtx.measureText(text).actualBoundingBoxAscent;
+        gCurrMeme.lines[lineNum].lineWidth = gCtx.measureText(text).width;
+
+        // gCtx.textAlign = 'center'
+        gCtx.fillText(text, x, y);
+        gCtx.strokeText(text, x, y);
+        lineNum++;
+    }
+}
+
+// creating a new empty line 
+function createLine(txt = '', size = 20, align = 'left', color = 'yellow', x = 50, y = 100) {
+    let line = {
+        txt: txt,
+        size: size,
+        align: align,
+        color: color,
+        x: x,
+        y: y
+    }
+    return line;
+}
+
+// add line to the meme's data
+function addLine(meme, line) {
+    meme.lines.push(line);
+}
+
+// change the font
+function changeFontSize(num) {
+
+    var lineNum = gCurrMeme.selectedLineIdx;
+    gCurrMeme.lines[lineNum].size += num;
+    renderMeme();
+}
+
+// switch between line or change lines
+function SwitchLine() {
+    if (gCurrMeme.lines.length > 2) {
+        if (gCurrMeme.selectedLineIdx < 2)
+            gCurrMeme.selectedLineIdx++;
+        else gCurrMeme.selectedLineIdx = 0;
+    } else {
+        if (gCurrMeme.selectedLineIdx + 1 <= gCurrMeme.lines.length) {
+            gCurrMeme.selectedLineIdx++;
+            gCurrMeme.lines.push(createLine());
+        } else gCurrMeme.selectedLineIdx++;
+    }
+
+}
+
+// we can Take It OUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//  move the line with the buttons 
+function moveLine(y) {
+    var lineNum = gCurrMeme.selectedLineIdx;
+    gCurrMeme.lines[lineNum].y += y * 5;
+}
+
+
+function getCurrMeme() {
+    var idx = gCurrMeme.selectedImgID;
+    var pic = getImgByID(idx).url;
+    return pic;
+}
+
+
+// rotate text!
+// function (rotateLine) {
+//     radians = (angle * Math.PI / 180)
+//     context.save();
+//     context.translate(newx, newy);
+//     context.rotate(-Math.PI / 2);
+//     context.textAlign = "center";
+//     context.fillText("Your Label Here", labelXposition, 0);
+//     context.restore();
+// }
+
+
+// ************************************************** Stickers ***********************************************
+
+
+function drawStickers() {
+    for (var i = 0; i < gCurrMeme.stickers.length; i++) {
+
+        gCtx.drawImage(
+            gCurrMeme.stickers[i].imgUrl, gCurrMeme.stickers[i].x, gCurrMeme.stickers[i].y,
+            gCurrMeme.stickers[i].width, gCurrMeme.stickers[i].height,
+        );
+    }
+}
+
+function addStickerData(el, id) {
+    var elImage = el;
+    var sticker = {
+        imgUrl: el,
+        x: 50,
+        y: 100,
+        width: 50,
+        height: 50
+    }
+    gCurrMeme.stickers.push(sticker);
+}
+
+
+function enlargeSticker() {
+    console.log('sticker to enlarge', gCurrMeme.stickers[gCurrMeme.selectedSticker]);
+    gCurrMeme.stickers[gCurrMeme.selectedSticker].width += 10;
+    gCurrMeme.stickers[gCurrMeme.selectedSticker].height += 10;
+    renderMeme();
+}
+
+
+function decreaseSticker() {
+    console.log('sticker to enlarge', gCurrMeme.stickers[gCurrMeme.selectedSticker]);
+    gCurrMeme.stickers[gCurrMeme.selectedSticker].width -= 10;
+    gCurrMeme.stickers[gCurrMeme.selectedSticker].height -= 10;
+    renderMeme();
+}
+
+
+
+
+//************************************ Drag and Drop Handling  ***********************************************
+
+
+// calls the function that checks if the clickevent is on the selected linem and letting gDragline be true to handle
+// drag and drop
+
+
+function findClickedLine(ev) {
+    var clickedX = ev.offsetX;
+    var clickedY = ev.offsetY;
+
+    var isLine = clickedLine(clickedX, clickedY);
+    if (isLine) {
+        gDragLine = true;
+        return isLine;
+    }
+    return;
+}
+
+// check if the clicked event is on the line's teritory returns true and changes meme's selectedLine
+function clickedLine(clickedX, clickedY) {
+    for (var i = 0; i < gCurrMeme.lines.length; i++) {
+        if (
+            clickedX >= gCurrMeme.lines[i].x &
+            clickedX <= gCurrMeme.lines[i].x + gCurrMeme.lines[i].lineWidth &
+            clickedY <= gCurrMeme.lines[i].y &
+            clickedY >= gCurrMeme.lines[i].y - gCurrMeme.lines[i].lineHeight) {
+
+            gCurrMeme.selectedLineIdx = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+function findClickedSticker(ev) {
+
+    var clickedX = ev.offsetX;
+    var clickedY = ev.offsetY;
+
+    var isSticker = clickedSticker(clickedX, clickedY);
+    if (isSticker) {
+        gDragSticker = true;
+        return isSticker;
+    }
+
+    return;
+}
+// check if the clicked event is on the sticker's teritory returns true and changes meme's selectedSticker
+
+function clickedSticker(clickedX, clickedY) {
+    for (var i = 0; i < gCurrMeme.stickers.length; i++) {
+
+        console.log('x,y', clickedX, clickedY)
+        console.log('sticker X click between', gCurrMeme.stickers[i].x, gCurrMeme.stickers[i].x + gCurrMeme.stickers[i].width)
+        console.log('sticker Y click between', gCurrMeme.stickers[i].y - gCurrMeme.stickers[i].height, gCurrMeme.stickers[i].y)
+        if (
+            clickedX >= gCurrMeme.stickers[i].x &
+            clickedX <= gCurrMeme.stickers[i].x + gCurrMeme.stickers[i].width &
+            clickedY >= gCurrMeme.stickers[i].y &
+            clickedY <= gCurrMeme.stickers[i].y + gCurrMeme.stickers[i].height) {
+
+            console.log('sticker it is');
+            gCurrMeme.selectedSticker = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+// drag the sticker
+
+function dragSticker() {
+    if (gDragSticker) {
+        console.log('dragSTICLER');
+        gCanvas.addEventListener('mousemove', ev => {
+            if (!gDragSticker) return;
+
+            gCurrMeme.stickers[gCurrMeme.selectedSticker].x = ev.offsetX;
+            gCurrMeme.stickers[gCurrMeme.selectedSticker].y = ev.offsetY;
+            renderMeme()
+        })
+        gCanvas.addEventListener('mouseup', ev => {
+            if (!gDragSticker) return;
+
+            gDragSticker = false;
+        })
+    }
+
+}
+
+
+function dragLine() {
+    if (gDragLine) {
+        gCanvas.addEventListener('mousemove', ev => {
+            if (!gDragLine) return;
+
+            gCurrMeme.lines[gCurrMeme.selectedLineIdx].x = ev.offsetX;
+            gCurrMeme.lines[gCurrMeme.selectedLineIdx].y = ev.offsetY;
+            renderMeme()
+        })
+        gCanvas.addEventListener('mouseup', ev => {
+            if (!gDragLine) return;
+
+            gDragLine = false;
+        })
+    }
+
+}
 

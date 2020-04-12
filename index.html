@@ -26,24 +26,81 @@
 
     </section>
     <section class="meme-generator hide">
+        <div class="extras hide">
+            <div class="sticker-selector">
+                <img class="sticker sticker1" onclick="onClickSticker(this,1)" src="./extras/glass-thug.png" alt="">
+                <img class="sticker sticker2" id="2" onclick="onClickSticker(this)" src="./extras/thug-life.png" alt="">
+                <img class="sticker sticker3" id="3" onclick="onClickSticker(this)" src="./extras/crown.png" alt="">
+                <img class="sticker sticker4" id="4" onclick="onClickSticker(this)" src="./extras/halo.png" alt="">
+                <img id="5" class="sticker sticker5" onclick="onClickSticker(this)" src="./extras/horns1.png" alt="">
+                <img id="6" class="sticker sticker6" onclick="onClickSticker(this)" src="./extras/joint.png" alt="">
+                <img id="7" class="sticker sticker7" onclick="onClickSticker(this)" src="./extras/mostacho.png" alt="">
+                <img id="8" class="sticker sticker8" onclick="onClickSticker(this)" src="./extras/kiss.png" alt="">
+            </div>
+            <div class="extras-buttons">
+                <button class="enlarge-sticker" onclick="enlargeSticker()">+</button>
+                <button class="decrease-sticker" onclick="decreaseSticker()">-</button>
+            </div>
+
+        </div>
+
         <div class="actions">
+
             <input type="text" class="meme-line" id="input-a" onchange="onGetText(this.value)">
             <label for="input-a"> Meme it. </label>
             <div class="change-font-buttons">
-                <button ontouchstart="changeFontSize(10)" onclick="changeFontSize(10)"
-                    class="font-increase">font+</button>
-                <button ontouchstart="changeFontSize(-10)" onclick="changeFontSize(-10)"
-                    class="font-decrease">font-</button>
+                <button class="desktop-btn" ontouchstart="changeFontSize(10)" onclick="changeFontSize(10)"
+                    class="desktop-btn font-increase">font+</button>
+                <button ontouchstart=" changeFontSize(-10)" onclick="changeFontSize(-10)"
+                    class="desktop-btn font-decrease">font-</button>
             </div>
             <div class="move-buttons">
-                <button ontouchstart="onMove(-1)" onclick="onMove(-1)" class="move-up">up</button>
-                <button ontouchstart="onMove(1)" onclick="onMove(1)" class="move-down">down</button>
+                <button class="desktop-btn" ontouchstart="onMove(-1)" onclick="onMove(-1)" class="move-up">up</button>
+                <button class="desktop-btn" ontouchstart="onMove(1)" onclick="onMove(1)" class="move-down">down</button>
             </div>
-            <button onclick="onSwitchLine()" ontouchstart="onSwitchLine()" class="switch-line">Switch line</button>
+
+            <div class="bottom-buttons">
+                <button onclick="onSwitchLine()" ontouchstart="onSwitchLine()" class="desktop-btn switch-line">Switch
+                    line</button>
+                <button class="desktop-btn extra-btn" onclick="toggleExtraModal()">Extra</button>
+            </div>
         </div>
+
         <div class="canvas-container">
-            <canvas id="my-canvas" height="0" width="0"></canvas>
+            <canvas id="my-canvas" onmousedown="onCanvasClick(event)" height="0" width="0"></canvas>
+            <button class="download-btn"><a href="#" onclick="downloadCanvas(this)" download="">Download</a></button>
         </div>
+
+
+
+
+
+
+        <div class="small-action-modal">
+            <div class="small-action-modal-container">
+
+                <input type="text" class="small-meme-line" placeholder="type MEME..." id="input-a"
+                    onchange="onGetText(this.value)">
+                <div class="small-change-font-buttons">
+                    <button ontouchstart="changeFontSize(10)" onclick="changeFontSize(10)"
+                        class="small font-increase">font+</button>
+                    <button ontouchstart="changeFontSize(-10)" onclick="changeFontSize(-10)"
+                        class="small font-decrease">font-</button>
+                </div>
+                <div class="small-move-buttons">
+                    <button ontouchstart="onMove(-1)" onclick="onMove(-1)" class="small move-up">up</button>
+                    <button ontouchstart="onMove(1)" onclick="onMove(1)" class="small move-down">down</button>
+                </div>
+            </div>
+            <div class="small-bottom-btns">
+                <button onclick="onSwitchLine()" ontouchstart="onSwitchLine()" class="small-switch-line">Switch
+                    line</button>
+                <button ontouchstart="toggleExtraModal()" onclick="toggleExtraModal()">EXTRA</button>
+            </div>
+
+        </div>
+
+
 
     </section>
 
