@@ -69,6 +69,7 @@ function setNewMeme(img) {
 
 function clearInputText() {
     document.querySelector('.meme-line').value = '';
+    document.querySelector('small-meme-line').value = '';
 }
 
 function clearMeme() {
