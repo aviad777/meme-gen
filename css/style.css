@@ -162,12 +162,19 @@ nav {
     flex-basis: 50%;
     
 }
+.social-container-mobile {
+    display: none;
+}
+.social-container-desktop {
+    display: flex;
+    flex-direction: row;
+}
 .download-btn a{
     text-decoration: none;
     color: rgb(245, 245, 245);
 }
 
-.download-btn {
+.social-btn {
     display: block;
     bottom: 0;
     
@@ -179,6 +186,7 @@ nav {
     margin: 0;
     padding: 0;
     font-size: smaller;
+    color: rgb(245, 245, 245);
 }
 
 
@@ -199,6 +207,9 @@ nav {
     background-color: rgb(18, 111, 192);
     border: #240B36 1px solid;
 }
+
+
+
 
 .sticker-selector {
     display: flex;
@@ -226,6 +237,22 @@ nav {
 }
 .extras-buttons button {
     flex-basis: 50%;
+}
+
+.share-modal  {
+    background-color: aquamarine;
+    z-index: 5;
+    
+    width: 200px;
+    height: 50px;
+}
+
+
+
+
+
+.share-modal.hide {
+    display: none;
 }
 
 
@@ -282,7 +309,7 @@ nav {
         margin: 30px auto;
         display: flex;
         flex-direction: column;
-        min-width: 450px;
+        min-width: 350px;
         z-index: 3;
         border-radius: 8px;
     }
@@ -327,7 +354,7 @@ nav {
         display: flex;
     }
     .small-bottom-btns button {
-        flex-basis: 50%;
+        flex-basis: 100%;
         height: 40px;
     }
 
@@ -418,4 +445,12 @@ nav {
     button {
         width: 40px;
     }  
+    .social-container-mobile {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .social-container-desktop {
+        display: none;
+    }
 }

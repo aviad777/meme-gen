@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="css/input.css">
@@ -28,14 +28,17 @@
     <section class="meme-generator hide">
         <div class="extras hide">
             <div class="sticker-selector">
-                <img class="sticker sticker1" onclick="onClickSticker(this,1)" src="./extras/glass-thug.png" alt="">
-                <img class="sticker sticker2" id="2" onclick="onClickSticker(this)" src="./extras/thug-life.png" alt="">
-                <img class="sticker sticker3" id="3" onclick="onClickSticker(this)" src="./extras/crown.png" alt="">
-                <img class="sticker sticker4" id="4" onclick="onClickSticker(this)" src="./extras/halo.png" alt="">
-                <img id="5" class="sticker sticker5" onclick="onClickSticker(this)" src="./extras/horns1.png" alt="">
-                <img id="6" class="sticker sticker6" onclick="onClickSticker(this)" src="./extras/joint.png" alt="">
-                <img id="7" class="sticker sticker7" onclick="onClickSticker(this)" src="./extras/mostacho.png" alt="">
-                <img id="8" class="sticker sticker8" onclick="onClickSticker(this)" src="./extras/kiss.png" alt="">
+                <img class="sticker sticker1" id="1" onclick="onClickSticker(this,id)" src="./extras/glass-thug.png"
+                    alt="">
+                <img class="sticker sticker2" id="2" onclick="onClickSticker(this,id)" src="./extras/thug-life.png"
+                    alt="">
+                <img class="sticker sticker3" id="3" onclick="onClickSticker(this,id)" src="./extras/crown.png" alt="">
+                <img class="sticker sticker4" id="4" onclick="onClickSticker(this,id)" src="./extras/halo.png" alt="">
+                <img class="sticker sticker5" id="5" onclick="onClickSticker(this,id)" src="./extras/horns1.png" alt="">
+                <img class="sticker sticker6" id="6" onclick="onClickSticker(this,id)" src="./extras/joint.png" alt="">
+                <img class="sticker sticker7" id="7" onclick="onClickSticker(this,id)" src="./extras/mostacho.png"
+                    alt="">
+                <img class="sticker sticker8" id="8" onclick="onClickSticker(this,id)" src="./extras/kiss.png" alt="">
             </div>
             <div class="extras-buttons">
                 <button class="enlarge-sticker" onclick="enlargeSticker()">+</button>
@@ -46,30 +49,46 @@
 
         <div class="actions">
 
-            <input type="text" class="meme-line" id="input-a" onchange="onGetText(this.value)">
+            <input type="text" class="meme-line" id="input-a" oninput="onGetText(this.value)">
             <label for="input-a"> Meme it. </label>
             <div class="change-font-buttons">
-                <button class="desktop-btn" ontouchstart="changeFontSize(10)" onclick="changeFontSize(10)"
+                <button class="desktop-btn" onclick="changeFontSize(10)"
                     class="desktop-btn font-increase">font+</button>
-                <button ontouchstart=" changeFontSize(-10)" onclick="changeFontSize(-10)"
-                    class="desktop-btn font-decrease">font-</button>
+                <button onclick="changeFontSize(-10)" class="desktop-btn font-decrease">font-</button>
             </div>
-            <div class="move-buttons">
-                <button class="desktop-btn" ontouchstart="onMove(-1)" onclick="onMove(-1)" class="move-up">up</button>
-                <button class="desktop-btn" ontouchstart="onMove(1)" onclick="onMove(1)" class="move-down">down</button>
-            </div>
+            <!-- feature that i stopped using because of the drag and drop -->
+            <!-- <div class="move-buttons">
+                <button class="desktop-btn" onclick="onMove(-1)" class="move-up">up</button>
+                <button class="desktop-btn" onclick="onMove(1)" class="move-down">down</button>
+            </div> -->
 
             <div class="bottom-buttons">
-                <button onclick="onSwitchLine()" ontouchstart="onSwitchLine()" class="desktop-btn switch-line">Switch
-                    line</button>
+                <button onclick="onSwitchLine()" title="you can add up to 3 headlines"
+                    class="desktop-btn switch-line">Text+</button>
                 <button class="desktop-btn extra-btn" onclick="toggleExtraModal()">Extra</button>
             </div>
         </div>
 
         <div class="canvas-container">
-            <canvas id="my-canvas" onmousedown="onCanvasClick(event)" height="0" width="0"></canvas>
-            <button class="download-btn"><a href="#" onclick="downloadCanvas(this)" download="">Download</a></button>
+            <canvas id="my-canvas" ontouchstart="event.preventDefault()" onmousedown="onCanvasClick(event)" height="0"
+                width="0"></canvas>
+            <div class="social-container-mobile">
+                <button class="social-btn download-btn"><a href="#" onclick="downloadCanvas(this)"
+                        download="">Download</a></button>
+
+                <button onclick="onShareButton()" class="share-button social-btn">Share</button>
+            </div>
+            <div class="social-container-desktop">
+                <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                    <input name="img" id="imgData" type="hidden" />
+                    <button class="btn" type="submit">Publish</button>
+                    <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
+                    <div class="share-container"></div>
+                </form>
+            </div>
+
         </div>
+
 
 
 
@@ -79,23 +98,19 @@
         <div class="small-action-modal">
             <div class="small-action-modal-container">
 
-                <input type="text" class="small-meme-line" placeholder="type MEME..." id="input-a"
-                    onchange="onGetText(this.value)">
+                <input type="text" class="small-meme-line" placeholder="type MEME..." onchange="onGetText(this.value)">
                 <div class="small-change-font-buttons">
-                    <button ontouchstart="changeFontSize(10)" onclick="changeFontSize(10)"
-                        class="small font-increase">font+</button>
-                    <button ontouchstart="changeFontSize(-10)" onclick="changeFontSize(-10)"
-                        class="small font-decrease">font-</button>
+                    <button onclick="changeFontSize(10)" class="small font-increase">font+</button>
+                    <button onclick="changeFontSize(-10)" class="small font-decrease">font-</button>
                 </div>
-                <div class="small-move-buttons">
-                    <button ontouchstart="onMove(-1)" onclick="onMove(-1)" class="small move-up">up</button>
-                    <button ontouchstart="onMove(1)" onclick="onMove(1)" class="small move-down">down</button>
-                </div>
+                <!-- stopped this buttons because of drag and drop -->
+                <!-- <div class="small-move-buttons">
+                    <button onclick="onMove(-1)" class="small move-up">up</button>
+                    <button onclick="onMove(1)" class="small move-down">down</button>
+                </div> -->
             </div>
             <div class="small-bottom-btns">
-                <button onclick="onSwitchLine()" ontouchstart="onSwitchLine()" class="small-switch-line">Switch
-                    line</button>
-                <button ontouchstart="toggleExtraModal()" onclick="toggleExtraModal()">EXTRA</button>
+                <button onclick="onSwitchLine()" ontouchstart="onSwitchLine()" class="small-switch-line">Text+</button>
             </div>
 
         </div>
@@ -105,7 +120,8 @@
     </section>
 
 
-
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src="js/upload-service.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/gallery-service.js"></script>
     <script src="js/meme-gen-service.js"></script>
